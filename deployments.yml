@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: account-service 
-          image: usharegistry.azurecr.io/account-service 
+          image: sqshq/piggymetrics-account-service
           ports:
           - containerPort: 6000
 ---
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: auth-service 
-          image: usharegistry.azurecr.io/auth-service 
+          image: sqshq/piggymetrics-auth-service 
           ports:
           - containerPort: 5000
 ---
@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
         - name: config 
-          image: usharegistry.azurecr.io/config 
+          image: sqshq/piggymetrics-config
           ports:
           - containerPort: 8888
 ---
@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
         - name: gateway 
-          image: usharegistry.azurecr.io/gateway 
+          image: sqshq/piggymetrics-gateway
           ports:
           - containerPort: 4000
 ---
@@ -79,7 +79,7 @@ spec:
     spec:
       containers:
         - name: monitoring 
-          image: usharegistry.azurecr.io/monitoring 
+          image: sqshq/piggymetrics-monitoring
           ports:
           - containerPort: 8080
 ---
@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
         - name: notification-service 
-          image: usharegistry.azurecr.io/notification-service 
+          image: sqshq/piggymetrics-notification-service
           ports:
           - containerPort: 8000
 ---
@@ -113,7 +113,7 @@ spec:
     spec:
       containers:
         - name: registry 
-          image: usharegistry.azurecr.io/registry
+          image: sqshq/piggymetrics-registry
           ports:
           - containerPort: 8761
 ---
@@ -130,7 +130,7 @@ spec:
     spec:
       containers:
         - name: statistics-service 
-          image: usharegistry.azurecr.io/statistics-service
+          image: sqshq/piggymetrics-statistics-service
           ports:
           - containerPort: 7000
 ---
@@ -147,6 +147,59 @@ spec:
     spec:
       containers:
         - name: turbine-stream-service 
-          image: usharegistry.azurecr.io/turbine-stream-service
+          image: sqshq/piggymetrics-turbine-stream-service
           ports:
           - containerPort: 8989
+---
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: auth-mongodb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-mongodb
+    spec:
+      containers:
+        - name: auth-mongodb 
+          image: sqshq/piggymetrics-mongodb
+          ports:
+          - containerPort: 80
+---
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: account-mongodb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: account-mongodb
+    spec:
+      containers:
+        - name: account-mongodb
+          image: sqshq/piggymetrics-mongodb
+          ports:
+          - containerPort: 80
+---
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: notification-mongodb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: notification-mongodb
+    spec:
+      containers:
+        - name: notification-mongodb
+          image: sqshq/piggymetrics-mongodb
+          ports:
+          - containerPort: 80
+          
+      
