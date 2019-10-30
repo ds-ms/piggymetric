@@ -33,6 +33,7 @@ kind: Service
 metadata:
   name: gateway  
 spec:
+  type: LoadBalancer
   ports:
   - port: 4000
   selector:
