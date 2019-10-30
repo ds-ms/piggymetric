@@ -1,6 +1,35 @@
 apiVersion : apps/v1beta1
 kind: Deployment
 metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rabbitmq 
+    spec:
+      containers:
+        - name: account-service 
+          image: rabbitmq:3-management
+          ports:
+          - containerPort: 15672
+          env:
+            - name: CONFIG_SERVICE_PASSWORD
+              value: password
+            - name: NOTIFICATION_SERVICE_PASSWORD
+              value: password
+            - name: STATISTICS_SERVICE_PASSWORD
+              value: password
+            - name: ACCOUNT_SERVICE_PASSWORD
+              value: password
+            - name: MONGODB_PASSWORD
+              value: password
+
+---
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
   name: account-service 
 spec:
   replicas: 1
